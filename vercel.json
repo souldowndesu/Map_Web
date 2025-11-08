@@ -5,7 +5,6 @@
       "src": "ai_proxy/server.js",
       "use": "@vercel/node",
       "config": {
-        // 关键：确保 knowledge.txt 被打包到 Serverless Function 中
         "includeFiles": [
           "ai_proxy/knowledge.txt"
         ]
