@@ -1,7 +1,7 @@
 // server.js - DeepSeek API 代理服务器
 
 // 1. 引入依赖
-require('dotenv').config(); 
+// require('dotenv').config(); 
 const express = require('express');
 // ⚠️ 关键修改：Node-fetch 库在某些 CommonJS 环境中需要这样导入
 const fetch = require('node-fetch').default; 
