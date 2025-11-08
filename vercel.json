@@ -11,5 +11,19 @@
       "src": "ai_proxy/server.js",
       "use": "@vercel/node"
     }
+  ],
+  "routes": [
+    { 
+        "src": "/", 
+        "dest": "/main.html" 
+    },
+    { 
+        "src": "/main.html", 
+        "dest": "/main.html" 
+    },
+    {
+        "src": "/(.*)",
+        "dest": "/$1"
+    }
   ]
 }
