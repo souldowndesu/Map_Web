@@ -1,17 +1,21 @@
-
 {
   "version": 2,
   "builds": [
     {
-      "src": "ai_proxy/server.js", 
-      "use": "@vercel/node"
+      "src": "ai_proxy/server.js",
+      "use": "@vercel/node",
+      "config": {
+        // 关键：确保 knowledge.txt 被打包到 Serverless Function 中
+        "includeFiles": [
+          "ai_proxy/knowledge.txt"
+        ]
+      }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "ai_proxy/server.js" 
+      "dest": "ai_proxy/server.js"
     }
   ]
-
 }
