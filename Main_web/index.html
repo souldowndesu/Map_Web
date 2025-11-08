@@ -1,103 +1,103 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="soul">
-    <title>主地图</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="soul">
+    <title>主地图</title>
 
-    <!--奇怪的外部库-->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <!--奇怪的外部库-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/map_ctrl.css">
-    <link rel="stylesheet" href="css/map_poi.css">
-    <link rel="stylesheet" href="css/search_table.css">
-    <link rel="stylesheet" href="css/ai_interaction.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/map_ctrl.css">
+    <link rel="stylesheet" href="css/map_poi.css">
+    <link rel="stylesheet" href="css/search_table.css">
+    <link rel="stylesheet" href="css/ai_interaction.css">
 
-    
+    
 </head>
 <body>
-    <!--栏目部分-->
-    <div id="header-trigger"></div>
-    <header id="main-header">
-        <div class="logo-container">
-            <a href="#">
-                <img src="image/liang.jpg" alt="网站 Logo">
-            </a>
-        </div>
+    <!--栏目部分-->
+    <div id="header-trigger"></div>
+    <header id="main-header">
+        <div class="logo-container">
+            <a href="#">
+                <img src="image/liang.jpg" alt="网站 Logo">
+            </a>
+        </div>
 
-        <nav class="main-nav">
-            <ul>
-                <li><a href="main.html">首页</a></a></li>
-                <li><a href="#search-anchor">列表查找</a></li>
-                <li><a href="#">EN</a></a></li>
-            </ul>
-        </nav>
-    </header>
-    <!--内容部分-->
-    <main>
-        <div class="map-container">
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">首页</a></li> <!-- 更改: main.html -> index.html -->
+                <li><a href="#search-anchor">列表查找</a></li>
+                <li><a href="#">EN</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!--内容部分-->
+    <main>
+        <div class="map-container">
 
-            <h1 class="map-container-title">学院路校区地图</h1>
+            <h1 class="map-container-title">学院路校区地图</h1>
 
-            <div class="map-content-wrapper">
+            <div class="map-content-wrapper">
 
-                <div id="map-frame">
-                    <div id="custom-zoom-controls">
-                        <button id="zoom-in-btn" class="zoom-btn" title="放大">+</button>
-                        <button id="zoom-out-btn" class="zoom-btn" title="缩小">-</button>
-                    </div>
-                </div>
-            
-                <div id="info-sidebar">
-                    <h2>🏛️ 校园常用关键点</h2>
-                    <ul id="poi-list">
-                        <li>关键点列表-loading...</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+                <div id="map-frame">
+                    <div id="custom-zoom-controls">
+                        <button id="zoom-in-btn" class="zoom-btn" title="放大">+</button>
+                        <button id="zoom-out-btn" class="zoom-btn" title="缩小">-</button>
+                    </div>
+                </div>
+            
+                <div id="info-sidebar">
+                    <h2>🏛️ 校园常用关键点</h2>
+                    <ul id="poi-list">
+                        <li>关键点列表-loading...</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-        <div class="map-container">
-            <div  id="search-anchor" class="search-table-container map-container">
-        
-                <h2 class="map-container-title">🔍 建筑信息检索表</h2>
-        
-                <div id="search-bar-placeholder" class="search-placeholder-margin">
-                    <input type="text" 
-                           id="search-input" 
-                           placeholder="输入建筑名称或关键词进行检索..." >
-                </div>
+        <div class="map-container">
+            <div  id="search-anchor" class="search-table-container map-container">
+        
+                <h2 class="map-container-title">🔍 建筑信息检索表</h2>
+        
+                <div id="search-bar-placeholder" class="search-placeholder-margin">
+                    <input type="text" 
+                           id="search-input" 
+                           placeholder="输入建筑名称或关键词进行检索..." >
+                </div>
 
 
-                <div id="retrieval-table-wrapper">
-                    <ul id="retrieval-poi-list" class="retrieval-poi-list-style">
-                    </ul>
-                </div>
-                
-                <div id="ai-response-area"></div>
+                <div id="retrieval-table-wrapper">
+                    <ul id="retrieval-poi-list" class="retrieval-poi-list-style">
+                    </ul>
+                </div>
+                
+                <div id="ai-response-area"></div>
 
-        </div>
+        </div>
 
-        <div class="page-footer-spacer">
-            <p>页面其他内容...</p>
-        </div>
-    </main>
+        <div class="page-footer-spacer">
+            <p>页面其他内容...</p>
+        </div>
+    </main>
 
-    <script>
-        window.appState = {
-            currentSelectedPoiId: null // 用于存储当前选中 POI 的 ID
-        };
-    </script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="javascript/header.js"></script>
-    <script src="javascript/map_ctrl.js"></script>
-    <script src="javascript/map_poi.js"></script>
-    <script src="javascript/map_clicklink.js"></script>
-    <script src="javascript/search_table.js"></script>
-    <script src="javascript/ai_interaction.js"></script>
+    <script>
+        window.appState = {
+            currentSelectedPoiId: null // 用于存储当前选中 POI 的 ID
+        };
+    </script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="javascript/header.js"></script>
+    <script src="javascript/map_ctrl.js"></script>
+    <script src="javascript/map_poi.js"></script>
+    <script src="javascript/map_clicklink.js"></script>
+    <script src="javascript/search_table.js"></script>
+    <script src="javascript/ai_interaction.js"></script>
 
 </body>
 </html>
