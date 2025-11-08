@@ -14,11 +14,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-<<<<<<< HEAD
     "express": "^4.18.2",
-=======
-    "express": "^5.1.0",
->>>>>>> 11ee5e4a255b6a0972793f49272ff92be92985c5
     "node-fetch": "^3.3.2"
   }
 }
