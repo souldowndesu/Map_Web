@@ -101,6 +101,14 @@ app.post('/api/ai-query', async (req, res) => {
     }
 });
 
+// --- 新增：处理 GET / 请求，解决 404 问题 ---
+app.get('/', (req, res) => {
+    // 假设您的前端页面 index.html 位于根目录。
+    // 如果没有前端文件，Vercel 期望您至少返回一个状态码或消息。
+    res.status(200).send('DeepSeek Proxy Server is running and ready to handle POST requests at /api/ai-query.');
+});
+// -----------------------------------------
+
 
 // 7. 启动服务器监听
 app.listen(PORT, () => {
