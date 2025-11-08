@@ -4,9 +4,15 @@
 import express from 'express';
 import fetch from 'node-fetch'; // 标准 ESM 导入 node-fetch v3+
 import cors from 'cors';
-import { readFileSync } from 'fs'; // 导入同步读取方法 (CommonJS 风格，但在 ESM 中可以这样导入)
-// Vercel 部署时，不要使用 .env 文件，而是直接配置环境变量
-// process.env.DEEPSEEK_API_KEY 会自动从 Vercel 的环境变量中获取
+import { readFileSync } from 'fs'; 
+import path from 'path'; // 引入 path 模块来处理文件路径
+import { fileURLToPath } from 'url'; // 引入 url 模块来处理 import.meta.url
+
+// 获取当前模块文件的目录名，用于构造绝对路径
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Vercel 部署时，环境变量会自动注入
 
 const app = express();
 // Vercel 会自动设置 PORT 变量，本地使用 3000
@@ -17,6 +23,23 @@ const PORT = process.env.PORT || 3000;
 app.use(cors()); 
 app.use(express.json()); // 用于解析前端 POST 请求体中的 JSON 数据
 
+// ⚠️ 知识库 RAG 实现：在服务器启动时一次性加载知识库
+const KNOWLEDGE_BASE_FILE = 'knowledge.txt';
+let knowledgeBase = '';
+
+// --- 关键修改：跳过文件加载，仅在控制台给出警告 ---
+try {
+    // 尝试使用 path.join 构造绝对路径
+    const knowledgePath = path.join(__dirname, KNOWLEDGE_BASE_FILE);
+    knowledgeBase = readFileSync(knowledgePath, 'utf8');
+    console.log(`📖 知识库加载成功，共 ${knowledgeBase.length} 字符。`);
+} catch (e) {
+    // 关键：不再抛出错误，而是使用一个空字符串并记录警告
+    knowledgeBase = ''; 
+    console.warn(`⚠️ 警告：知识库文件 (${KNOWLEDGE_BASE_FILE}) 读取失败或不存在！RAG功能将无法使用。`);
+    console.warn(`错误详情: ${e.message}`);
+}
+// --------------------------------------------------
 
 // 3. 定义 AI 查询代理路由：/api/ai-query
 app.post('/api/ai-query', async (req, res) => {
@@ -25,7 +48,6 @@ app.post('/api/ai-query', async (req, res) => {
     const query = req.body.query; // 获取前端发送的查询内容
 
     if (!deepseekApiKey) {
-        // 在 Vercel 上，我们检查是否存在环境变量，而不是检查硬编码的占位符
         return res.status(500).send({ error: 'DeepSeek API 密钥未配置。请检查 Vercel 环境变量设置。' });
     }
     
@@ -43,7 +65,7 @@ app.post('/api/ai-query', async (req, res) => {
                             如果是与该校区地理位置查找无关的问题，可以简洁的回应，结束对话
                             如果要求推荐，应该给出推荐的理由，并且基于知识库内容进行推荐，也可以结合自己的认识加以补充。
                             回答时无需说明信息来源，仅说“推测”：
-                            \n\n--- 知识库 ---\n${knowledgeBase}\n--- 结束 ---`;
+                            \n\n--- 知识库 ---\n${knowledgeBase}\n--- 结束 ---`; // knowledgeBase 现在可能是空字符串
 
         const deepseekResponse = await fetch('https://api.deepseek.com/chat/completions', {
             method: 'POST',
@@ -79,18 +101,6 @@ app.post('/api/ai-query', async (req, res) => {
     }
 });
 
-// ⚠️ 知识库 RAG 实现：在服务器启动时一次性加载知识库
-const KNOWLEDGE_BASE_FILE = 'knowledge.txt';
-let knowledgeBase = '';
-
-try {
-    // 同步读取文件，确保在处理请求前加载完成
-    knowledgeBase = readFileSync(KNOWLEDGE_BASE_FILE, 'utf8');
-    console.log(`📖 知识库加载成功，共 ${knowledgeBase.length} 字符。`);
-} catch (e) {
-    console.error(`❌ 知识库文件 (${KNOWLEDGE_BASE_FILE}) 读取失败或不存在！`, e.message);
-    // 如果失败，knowledgeBase 保持为空字符串
-}
 
 // 7. 启动服务器监听
 app.listen(PORT, () => {
