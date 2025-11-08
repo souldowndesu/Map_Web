@@ -1,29 +1,25 @@
 {
   "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/ai_proxy/server.js"
+    },
+    {
+      "source": "/",
+      "destination": "/main.html"
+    },
+    {
+      "source": "/main.html",
+      "destination": "/main.html"
     }
   ],
   "builds": [
     {
       "src": "ai_proxy/server.js",
       "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    { 
-        "src": "/", 
-        "dest": "/main.html" 
-    },
-    { 
-        "src": "/main.html", 
-        "dest": "/main.html" 
-    },
-    {
-        "src": "/(.*)",
-        "dest": "/$1"
     }
   ]
 }
