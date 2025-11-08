@@ -3,11 +3,11 @@
 
 // 1. 引入依赖
 // require('dotenv').config(); 
-const express = require('express');
+import express from 'express';
 // ⚠️ 关键修改：Node-fetch 库在某些 CommonJS 环境中需要这样导入
-const fetch = require('node-fetch').default; 
-const cors = require('cors');
-const fs = require('fs');
+import fetch = from 'node-fetch'.default; 
+import cors = from 'cors';
+import fs = from 'fs';
 
 const app = express();
 const PORT = 3000; // 代理服务器将在 3000 端口运行
