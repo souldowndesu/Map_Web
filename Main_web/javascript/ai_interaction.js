@@ -1,9 +1,10 @@
 // 文件名: ai_interaction.js
-// 目的: 调用安全的后端代理服务 (http://localhost:3000)
+// 目的: 调用安全的后端代理服务 (已部署在 Vercel)
 
 (function() {
-    // === 核心配置 (指向您的本地代理服务器地址) ===
-    const PROXY_ENDPOINT = "http://localhost:3000/api/ai-query"; 
+    // === 核心配置 (指向您的 Vercel 代理服务器地址) ===
+    // ⚠️ 关键修改：使用相对路径，指向 Vercel 上的 API 路由
+    const PROXY_ENDPOINT = "/api/ai-query"; 
     const MIN_QUERY_LENGTH = 2; 
     const DEBOUNCE_DELAY = 600; 
     // ===============================================
@@ -45,7 +46,7 @@
         updateAIResponse('loading', query);
 
         try {
-            // ⭐ 关键修改：调用您自己的代理端点
+            // ⭐ 关键修改已应用：使用相对路径 /api/ai-query
             const response = await fetch(PROXY_ENDPOINT, {
                 method: 'POST',
                 headers: {
@@ -68,7 +69,11 @@
 
         } catch (error) {
             console.error("代理服务调用失败:", error);
-            updateAIResponse('error', error.message || "网络错误或代理服务器故障");
+            // 提示用户可能的原因，例如密钥缺失或网络问题
+            const errorMessage = (error.message.includes('500') || error.message.includes('密钥未配置')) 
+                                ? "代理服务器故障或 API 密钥未配置，请联系管理员。" 
+                                : error.message;
+            updateAIResponse('error', errorMessage || "网络错误或代理服务器故障");
         }
     }
 
