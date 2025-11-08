@@ -1,0 +1,6 @@
+/ai_proxy/node_modules
+/ai_proxy/.env
+/dist
+/build
+# Windows
+Thumbs.db
