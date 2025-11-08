@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 {
   "version": 2,
   "builds": [
@@ -13,20 +13,5 @@
       "dest": "ai_proxy/server.js" 
     }
   ]
-=======
-{
-  "version": 2,
-  "builds": [
-    {
-      "src": "ai_proxy/server.js", 
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "ai_proxy/server.js" 
-    }
-  ]
->>>>>>> 11ee5e4a255b6a0972793f49272ff92be92985c5
+
 }
