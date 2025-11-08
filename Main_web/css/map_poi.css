@@ -1,0 +1,77 @@
+/* --- 关键：POI 图块高亮样式 (无填充，仅描边) --- */
+.poi-highlight {
+    /* 使用过渡效果，让高亮出现和消失更平滑 */
+    /* transition: all 0.3s ease-in-out;  */
+    
+    /* 边框颜色：使用主色调的深蓝色 */
+    stroke: #005bac !important; 
+    
+    /* 填充颜色：设置为 none 或 transparent，以去除填充 */
+    fill: none !important; 
+    
+    /* 边框宽度：使用像素值，确保粗细固定 */
+    stroke-width: 4px !important; 
+    
+    /* 描边透明度（如果需要让边框半透明） */
+    opacity: 0.8; /* 保持边框完全不透明 */
+}
+
+/* --- 新增：POI 列表项选中状态样式 --- */
+#poi-list li.selected {
+    background-color: #005bac; /* 选用与边框颜色一致的主色调 */
+    color: white; /* 确保文字清晰可见 */
+    transition: background-color 0.3s ease;
+}
+
+
+/* ======================================= */
+/* POI 列表 (ul#poi-list) 及列表项 (li) 样式优化 */
+/* ======================================= */
+
+/* 1. 通用列表项样式 */
+#poi-list li {
+    /* 现有的样式保持不变，我们在此添加圆角 */
+    
+    /* 关键：设置圆角 */
+    border-radius: 6px; /* 较小的圆角，例如 6px */
+    
+    /* 增加一些外边距，让列表项之间有间隔，圆角效果更明显 */
+    margin-bottom: 5px;
+    padding: 10px 15px; /* 确保内边距充足 */
+    
+    /* 确保背景色是纯色或有足够对比，以衬托圆角 */
+    background-color: #f8f8f8; /* 浅色背景 */
+    
+    /* 添加轻微的阴影或边框，让它看起来像一个“卡片” */
+    border: 1px solid #ddd;
+    
+    cursor: pointer; /* 保持指针提示 */
+    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+/* 2. 鼠标悬停时的样式 */
+#poi-list li:hover {
+    background-color: #ebebeb; /* 悬停时颜色略深 */
+    border-color: #ccc;
+}
+
+/* 3. 选中状态的样式 (li.selected) */
+#poi-list li.selected {
+    /* 保持选中时的颜色，但加入圆角 */
+    background-color: #0091ff; /* 主色调蓝色 */
+    color: white; /* 选中时文字变白 */
+    border-color: #0056b3;
+    
+    /* 关键：保持圆角一致 */
+    border-radius: 6px; 
+    
+    /* 可选：添加轻微的提升效果，强调选中状态 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 可选：如果希望列表容器本身也有圆角 */
+#info-sidebar {
+    /* ... 现有样式 ... */
+    border-radius: 8px; /* 略大于列表项的圆角 */
+    overflow: hidden; /* 确保内部内容不会溢出圆角 */
+}

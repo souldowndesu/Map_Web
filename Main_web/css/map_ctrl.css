@@ -1,0 +1,165 @@
+/* --- map_ctrl.css --- */
+
+/* 颜色变量的参考值 (假设已在 global_styles.css 或 :root 中定义) */
+/* --primary-blue: #005bac; */
+/* --background-gray: #f4f4f4; */
+/* --light-border: #e0e0e0; */
+/* --surface-white: #ffffff; */
+
+/* === 1. [修改] .map-container 变为外层容器卡片 (浅背景) === */
+.map-container {
+    /* 外层卡片样式：使用浅色背景、柔和边框和轻微阴影 */
+    background-color: #fcfcfc; /* 略浅于页面背景 #f4f4f4，提供层次感 */
+    border: 1px solid #e0e0e0; /* 轻微边框 */
+    border-radius: 10px; /* 略大的圆角 */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05); /* 极轻的阴影 */
+    padding: 20px; /* 内部留白，将地图和列表推入 */
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+/* === 2. [新增] 容器标题样式 === */
+.map-container-title {
+    color: #005bac; /* 使用主题蓝 */
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 20px; /* 标题和内容的间距 */
+    font-size: 1.8em; /* 略大于侧边栏标题 */
+}
+
+/* === 3. [新增] 新的 Flex 布局容器 (包裹地图和侧栏) === */
+.map-content-wrapper {
+    display: flex;
+    gap: 20px;
+    min-height: 700px; /* 确保内容区域有足够的高度 */
+}
+
+/* === 4. 地图框架样式 (#map-frame) - 保留原有阴影和白色背景 === */
+#map-frame {
+    flex-grow: 1;
+    height: 700px; 
+    
+    /* 关键：保留阴影和卡片属性 */
+    background-color: #ffffff; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* === 5. 信息栏样式 (#info-sidebar) - 保留原有阴影和白色背景 === */
+#info-sidebar {
+    width: 300px;
+    height: 700px;
+    
+    /* 关键：保留阴影和卡片属性 */
+    background-color: #ffffff; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    
+    padding: 20px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    overflow-y: auto; 
+}
+
+/* === 6. 侧边栏 H2 标题 (在侧边栏内部) === */
+#info-sidebar h2 {
+    color: #005bac;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+
+/* --- 7. 列表和缩放控件样式 (保持与主题色一致) --- */
+
+/* POI 列表基础样式 */
+#poi-list {
+    list-style: none;
+    padding: 0;
+}
+
+#poi-list li {
+    padding: 10px 0;
+    /* 列表项的具体样式由 map_poi.css 接管，这里只做基础兼容 */
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#poi-list li:hover {
+    background-color: #f7f7f7;
+    color: #005bac;
+}
+
+/* 自定义缩放按钮 */
+#custom-zoom-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 10px; 
+    z-index: 500; 
+    display: flex;
+    flex-direction: column; 
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.zoom-btn {
+    background-color: #ffffff;
+    color: #333;
+    border: none;
+    padding: 8px 12px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    line-height: 1; 
+    border-bottom: 1px solid #ddd;
+}
+
+.zoom-btn:hover {
+    background-color: #005bac; 
+    color: white;
+}
+.zoom-btn:last-child {
+    border-bottom: none;
+}
+
+/* ======================================= */
+/* 8. 响应式布局：适用于手机和平板 (最大宽度 768px) */
+/* ======================================= */
+@media (max-width: 768px) {
+    
+    /* 1. 地图与侧边栏的容器：从水平堆叠改为垂直堆叠 */
+    .map-content-wrapper {
+        flex-direction: column; /* 垂直堆叠 */
+        min-height: 0; /* 取消最小高度限制（使用 0 以兼容 Firefox） */
+    }
+
+    /* 2. 地图框架：全宽，降低高度 */
+    #map-frame {
+        height: 50vh; /* 地图高度占据视口的一半 */
+        width: 100%; /* 全宽 */
+        min-height: 300px; /* 确保最小高度 */
+        margin-bottom: 10px;
+    }
+
+    /* 3. 信息侧边栏：全宽，降低高度（或让内容自然撑开） */
+    #info-sidebar {
+        width: 100%; /* 全宽 */
+        height: auto; /* 高度由内容决定 */
+        max-height: 400px; /* 限制最大高度，防止列表过长 */
+        overflow-y: auto; /* 允许滚动 */
+        order: 2; /* 可选：将侧边栏（POI 列表）放在地图下方 */
+    }
+    
+    /* 4. 检索表容器 (search-table-container) 也应全宽 */
+    .search-table-container {
+        padding: 15px;
+    }
+    
+    /* 5. 导航栏 (如果需要适应，请在 header.css 中调整) */
+    /* 可以在这里添加针对主导航 main-nav 的隐藏或堆叠调整 */
+}

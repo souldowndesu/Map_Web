@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主楼</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <link rel="stylesheet" href="/Map/Main_web/css/header.css">
+    <link rel="stylesheet" href="/Map/building_web/b_css/basic_style.css">
+    <link rel="stylesheet" href="/Map/building_web/b_css/b_map_ctrl.css">
+
+</head>
+<body>
+    <div id="header-trigger"></div>
+    <header id="main-header">
+        <div class="logo-container">
+            <a href="#">
+                <img src="../b_image/liang.jpg" alt="网站 Logo"> 
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/Map/Main_web/main.html">首页</a></li>
+                <li><a href="#">列表查找</a></li>
+                <li><a href="#">EN</a></li>
+                <li><a href="#">登录</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="main-map-section">
+            <h2 class="section-title">当前楼层: <span id="current-floor-name"></span></h2>
+            <div class="main-map-display">
+                <div id="map-frame"></div> <div id="custom-zoom-controls">
+                    <button id="zoom-in-btn" class="custom-zoom-btn" title="放大">+</button>
+                    <button id="zoom-out-btn" class="custom-zoom-btn" title="缩小">-</button>
+                </div>
+            </div>
+            <p class="map-tip">点击地图上的热区或楼层缩略图进行导航。</p>
+        </section>
+
+        <section class="floor-selector-section">
+            <h3 class="selector-title">选择楼层</h3>
+            <div id="floor-thumbnails-container" class="floor-thumbnails">
+                </div>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="/Map/Main_web/javascript/header.js"></script>
+    <script src="/Map/building_web/b_js/basic_work.js"></script>
+    <script src="/Map/building_web/b_js/b_map_ctrl.js"></script>
+</body>
+</html>

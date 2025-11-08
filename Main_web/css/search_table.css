@@ -1,0 +1,138 @@
+/* 文件名: search_table.css */
+
+/* ======================================= */
+/* 1. 外层容器基础样式 (恢复宽度自适应) */
+/* ======================================= */
+.search-table-container {
+    /* 移除上一轮添加的 max-width 400px 和 margin: auto */
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 20px; 
+    
+    /* 如果上一轮添加了圆角，这里可以保持或移除，保持与 .map-container 一致即可 */
+    /* border-radius: 10px; */ 
+}
+
+
+/* ======================================= */
+/* 2. 搜索栏输入框样式 (保持不变) */
+/* ======================================= */
+#search-bar-placeholder input[type="text"] {
+    width: 100%;
+    padding: 12px 15px; 
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#search-bar-placeholder input[type="text"]:focus {
+    border-color: #005bac; 
+    box-shadow: 0 0 5px rgba(0, 91, 172, 0.3);
+    outline: none;
+}
+
+/* ⭐ 新增：取代 #search-bar-placeholder 上的内联 margin-bottom: 20px; */
+.search-placeholder-margin {
+    margin-bottom: 20px;
+}
+
+/* ======================================= */
+/* 3. 检索结果列表样式 (关键修改：Flexbox 标签布局和动画) */
+/* ======================================= */
+
+/* ⭐ 新增：取代 #ai-response-area 上的内联 display: none; */
+/* ai_interaction.js 会在需要时将 display 切换为 block */
+#ai-response-area {
+    /* 默认隐藏，由 JS 控制显示 */
+    display: none; 
+    /* 确保 AI 区域与列表有间隔 */
+    margin-top: 15px;
+}
+
+/* ======================================= */
+/* 4. 底部填充区域 */
+/* ======================================= */
+
+/* ⭐ 新增：取代底部大 div 上的内联样式 */
+.page-footer-spacer {
+    height: 1000px; 
+    padding: 20px; 
+    text-align: center;
+}
+
+/* 列表容器 (限制高度，使其可滚动) */
+#retrieval-table-wrapper {
+    max-height: 500px; 
+    overflow-y: auto;
+    /* padding-right: 10px; */ /* 移除，防止影响标签布局 */
+}
+
+/* 列表 ul 基础样式 (实现多行标签) */
+#retrieval-poi-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    /* ⭐ 关键：Flexbox 布局实现多列标签 */
+    display: flex;
+    flex-wrap: wrap; /* 允许换行 */
+    gap: 10px; /* 标签之间的间距 */
+    
+    /* 启用子元素的过渡效果（用于平滑出现/消失/移动） */
+    transition: all 0.4s ease;
+}
+
+/* 列表 li 项样式 (实现标签视觉效果) */
+.retrieval-list-item {
+    cursor: pointer;
+    
+    /* ⭐ 关键：标签样式 - 紧凑的内边距和圆角 */
+    padding: 6px 12px; /* 更小的内边距 */
+    border-radius: 20px; /* 更大的圆角，像药丸或标签 */
+    margin: 0; /* 外部间距由父元素的 gap 控制 */
+    
+    /* 背景和边框 */
+    background-color: #f0f0f0; 
+    border: 1px solid #ddd;
+    
+    /* 文本设置 */
+    font-size: 0.9em;
+    white-space: nowrap; /* 防止标签内的文字折行 */
+    
+    /* ⭐ 关键：过渡动画 */
+    /* 确保 opacity、transform 和 flex 属性都能平滑过渡，实现滑动和淡入/淡出 */
+    transition: all 0.9s ease-in-out, background-color 0.2s; 
+    
+    /* 默认状态：完全显示 */
+    opacity: 1;
+    transform: scale(1);
+
+
+    /* ⭐ 关键 FLIP 动画属性 */
+    /* 允许 transform, opacity 过渡，box-shadow 也一起过渡 */
+    transition: 
+        transform 0.4s cubic-bezier(0.2, 0.8, 0.5, 1), /* 平滑的滑动效果 */
+        opacity 0.3s ease-in-out,
+        box-shadow 0.3s;
+    
+    will-change: transform, opacity; /* 性能优化 */
+}
+
+.retrieval-list-item.is-leaving {
+    opacity: 0;
+    transform: scale(0.9); /* 缩小效果，使消失更平滑 */
+}
+
+/* 鼠标悬停状态 */
+.retrieval-list-item:hover {
+    background-color: #e0e0e0; 
+}
+
+/* 选中状态 */
+.retrieval-list-item.selected {
+    background-color: #005bac; 
+    color: white; 
+    border-color: #005bac;
+}

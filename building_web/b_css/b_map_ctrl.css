@@ -1,0 +1,75 @@
+/* --- b_map_ctrl.css (用于 zhu_m.html 的 Leaflet 地图控制) --- */
+
+/* 颜色变量的参考值 (假设来自 basic_style.css) */
+/* --primary-blue: #007bff; */
+/* --white: #ffffff; */
+/* --light-border: #ddd; */
+/* --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1); */
+
+/* 1. Leaflet 地图容器的尺寸 */
+#map-frame {
+    width: 100%;
+    height: 100%; 
+    background-color: #f8f8f8; 
+    border-radius: 8px; 
+    overflow: hidden; 
+}
+
+/* 2. 隐藏原有的图片元素和覆盖层 (在 Leaflet 模式下不再使用) */
+#central-map-image, .map-overlay {
+    display: none !important;
+}
+
+/* 3. 自定义缩放按钮容器样式 */
+#custom-zoom-controls {
+    position: absolute; /* 绝对定位 */
+    bottom: 20px;       /* 距离底部 */
+    left: 20px;         /* 距离左侧 */
+    z-index: 1000;      /* 确保在地图上方 */
+    display: flex;
+    flex-direction: column; /* 按钮垂直排列 */
+    border-radius: 4px;
+    box-shadow: var(--shadow-light); 
+    overflow: hidden;
+}
+
+/* 4. 自定义缩放按钮样式 (与 map_ctrl.css 保持类似风格) */
+.custom-zoom-btn {
+    background-color: var(--white); 
+    color: #333; /* 使用深色文本 */
+    border: none;
+    padding: 8px 12px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    line-height: 1; 
+    border-bottom: 1px solid var(--light-border); /* 分隔线 */
+}
+
+.custom-zoom-btn:hover {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+.custom-zoom-btn:last-child {
+    border-bottom: none; /* 最后一个按钮无下边框 */
+}
+
+/* 5. 热区（POI Marker）的自定义样式 (保持不变) */
+.leaflet-marker-icon.poi-marker {
+    background-color: var(--primary-blue); 
+    border-radius: 50%;
+    width: 26px; 
+    height: 26px;
+    border: 3px solid var(--white); 
+    opacity: 0.85;
+    transition: all 0.2s;
+}
+
+.leaflet-marker-icon.poi-marker:hover {
+    opacity: 1;
+    cursor: pointer;
+    transform: scale(1.1); 
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+}

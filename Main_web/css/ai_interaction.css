@@ -1,0 +1,36 @@
+/* 文件名: ai_interaction.css */
+
+/* AI 回答区域容器样式 */
+#ai-response-area {
+    margin-top: 15px; 
+    padding: 12px 15px; 
+    border-radius: 8px; /* 柔和圆角 */
+    background-color: #f0f8ff; /* 浅蓝色背景 */
+    color: #333; 
+    font-size: 0.95em;
+    line-height: 1.5;
+    min-height: 20px;
+    border: 1px solid #cceeff;
+    /* 轻微阴影，使其像一张小卡片 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* AI 回答中的提示文本 */
+#ai-response-area.loading {
+    color: #007bff; /* 加载时使用主色调 */
+    font-style: italic;
+}
+
+/* AI 回答中的错误文本 */
+#ai-response-area.error {
+    background-color: #fff0f0; /* 浅红色背景 */
+    border-color: #ffcccc;
+    color: #cc0000; /* 错误时使用红色 */
+    font-weight: bold;
+}
+
+/* AI 机器人图标或强调文本的样式 */
+#ai-response-area strong {
+    color: #005bac; /* 强调色 */
+    font-weight: 600;
+}

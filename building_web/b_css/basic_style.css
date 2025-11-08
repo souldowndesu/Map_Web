@@ -1,0 +1,155 @@
+/* --- 地图主题与布局样式 (styles.css) --- */
+
+/* 现代 UI 基础设置 */
+:root {
+    --primary-blue: #007bff; /* 主题蓝 */
+    --light-blue: #e9f5ff;    /* 浅蓝背景或高亮 */
+    --white: #ffffff;
+    --dark-text: #333;
+    --light-border: #ddd;
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s;
+}
+
+/* 确保字体和基础样式继承 */
+* {
+    box-sizing: border-box;
+    /* 继承 body 的字体，确保全局一致 */
+    font-family: inherit; 
+}
+
+/* 顶栏框架已设置 padding-top，这里只需关注内容区域 */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.section-title, .selector-title {
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
+    border-left: 4px solid var(--primary-blue);
+}
+
+/* 主地图区域 */
+.main-map-section {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+}
+
+.main-map-display {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9; 
+    overflow: hidden;
+    border-radius: 8px;
+    border: 2px solid var(--light-border);
+    background-color: #f8f8f8;
+}
+
+.map-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    /* 交互流畅度: 增加切换时的过渡效果 */
+    transition: opacity 0.3s ease-in-out; 
+}
+
+/* 地图切换动画类 */
+.map-image.fade-out {
+    opacity: 0;
+}
+.map-image.fade-in {
+    opacity: 1;
+}
+
+/* 地图上的交互热区 */
+.hotspot {
+    position: absolute;
+    background-color: rgba(0, 123, 255, 0.8);
+    color: var(--white);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.hotspot:hover {
+    transform: scale(1.05);
+    background-color: var(--primary-blue);
+}
+
+.map-tip {
+    text-align: center;
+    color: #666;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+/* 楼层选择器 */
+.floor-selector-section {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+}
+
+.floor-thumbnails {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.thumbnail-item {
+    cursor: pointer;
+    width: 150px;
+    text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 0.5rem;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color var(--transition-speed);
+    border: 2px solid var(--light-border);
+}
+
+.thumbnail-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.2);
+}
+
+.thumbnail-item.active {
+    border-color: var(--primary-blue);
+    background-color: var(--light-blue);
+    box-shadow: 0 0 0 3px var(--primary-blue), var(--shadow-light);
+    transform: none;
+}
+
+.thumb-image {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.floor-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--dark-text);
+}
+
+.thumbnail-item.active .floor-name {
+    color: var(--primary-blue);
+}
