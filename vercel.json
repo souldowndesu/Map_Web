@@ -1,20 +1,15 @@
 {
   "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/ai_proxy/server.js"
+    }
+  ],
   "builds": [
     {
       "src": "ai_proxy/server.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "ai_proxy/knowledge.txt"
-        ]
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "ai_proxy/server.js"
+      "use": "@vercel/node"
     }
   ]
 }
